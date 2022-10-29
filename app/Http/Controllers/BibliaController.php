@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Testament;
+use App\Models\Verse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,9 +49,21 @@ class BibliaController extends Controller
         return view("biblia.listar-livros", ["livros" => $livros, "nomeTestamento" => $testamento["nome"]]);
     }
 
-    public function listarVersiculos()
+    public function listarVersiculos($livro, $capitulo = 1)
     {
-        return view("biblia.listar-versiculos");
+        $versiculos = Verse::where([
+            ["book", "=", $livro],
+            ["chapter", "=", $capitulo]
+        ])->get();
+
+        $totalCapitulos = Verse::where("book", "=", $livro)->max("chapter");
+
+        return view("biblia.listar-versiculos", [
+            "versiculos" => $versiculos,
+            "totalCapitulos" => $totalCapitulos,
+            "livro" => $livro,
+            "capitulo" => $capitulo
+        ]);
     }
 }
 

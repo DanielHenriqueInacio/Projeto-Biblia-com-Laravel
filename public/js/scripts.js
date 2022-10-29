@@ -4,7 +4,7 @@ window.onload = function() {
         if (busca === "") {
             alert("Precisa informar um termo para busca!")
         } else {
-            window.location = `/index.php?busca=${busca}`;
+            window.location = `/?busca=${busca}`;
         }
     })
 }

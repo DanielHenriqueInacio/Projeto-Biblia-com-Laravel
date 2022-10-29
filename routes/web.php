@@ -25,9 +25,12 @@ Route::get("/livros/{testamento_id?}", [BibliaController::class, "listarLivros"]
 // for opcional, se coloca um ? no final do parametro. Ex. /livros/{testamento?}
 
 Route::get("/versiculos/{livro}/{capitulo?}", [BibliaController::class, "listarVersiculos"])->name("versiculos_biblia");
-Route::get("/favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos");
+Route::get("/favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos")->middleware("auth");
 Route::get("/login", [AuthController::class, "login"])->name("login");
-Route::get("/cadastrar", [UsuarioController::class, "cadastrar"])->name("cadastrar");
+Route::post("/logar", [AuthController::class, "logar"])->name("logar");
+Route::get("/novo-usuario", [UsuarioController::class, "registrar"])->name("registrar");
+Route::post("/cadastrar", [UsuarioController::class, "cadastrar"])->name("cadastrar");
+Route::get("/logout", [AuthController::class, "logout"])->name("sair");
 
 //Route::get("/apenas-para-visualizar-o-nome-da-rota/{codigo}", [DefaultController::class, "index"])->name("rota_teste");
 

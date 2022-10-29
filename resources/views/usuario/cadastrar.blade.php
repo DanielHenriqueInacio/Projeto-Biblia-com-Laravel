@@ -1,6 +1,6 @@
-@extends("layouts.main")
+@extends("layouts.login")
 
-@section("title", "Versiculos Biblicos - ")
+@section("title", "Cadastrar - ")
 
 @section("content")
     <div class="row mb-5">
@@ -20,20 +20,30 @@
                         </svg>
                     </div>
 
-                    <form class="text-center" action="cadastrar.php" method="post">
+                    <form class="text-center" action="{{ route("cadastrar") }}" method="post">
+                        @csrf
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <div class="mb-3">
-                            <input class="form-control" type="text" name="name" placeholder="Nome">
+                            <input class="form-control" type="text" name="nome" value="{{ old("nome") }}" placeholder="Nome">
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" type="email" name="email" placeholder="Email">
+                            <input class="form-control" type="text" name="email" value="{{ old("email") }}" placeholder="Email">
                         </div>
                         <div class="mb-3">
-                            <input class="form-control" type="password" name="password" placeholder="Password">
+                            <input class="form-control" type="password" name="password" placeholder="Senha">
                         </div>
                         <div class="mb-3">
                             <button class="btn btn-primary d-block w-100" type="submit">Cadastrar</button>
                         </div>
-                        <p class="text-muted"><a href="login.php">Já tem cadastro? Clique aqui!</a></p>
+                        <p class="text-muted"><a href="{{ route("login") }}">Já tem cadastro? Clique aqui!</a></p>
                     </form>
                 </div>
             </div>

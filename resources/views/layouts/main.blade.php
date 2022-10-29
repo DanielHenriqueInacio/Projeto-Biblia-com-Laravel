@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/styles.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
 </head>
 
 <body>
@@ -28,8 +29,10 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="{{route("home")}}">Home</a></li>
                 {{--                <li class="nav-item"><a class="nav-link active" href="{{ route("rota_teste", ["ZYX"]) }}">Home</a></li>--}}
+                @if(Auth::check())
                 <li class="nav-item"><a class="nav-link" href="{{route("listar_favoritos")}}">Favoritos</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Minhas anotações</a></li>
+                @endif
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Testamentos</a>
                     <div class="dropdown-menu">
@@ -38,16 +41,20 @@
                         <a class="dropdown-item" href="{{ route("livros_biblia") }}">Todos Testamentos</a>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="{{route("cadastrar")}}">Cadastre-se</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{route("login")}}">Login</a></li>
+                @unless(Auth::check())
+                <li class="nav-item"><a class="nav-link" href="{{ route("registrar") }}">Cadastre-se</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route("login") }}">Login</a></li>
+                @endunless
+                @if(Auth::check())
                 <li class="nav-item dropdown">
                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
-                        Olá Fulano
+                        Olá {{Auth::user()->nome}}
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">Sair</a>
+                        <a class="dropdown-item" href="{{route("sair")}}">Sair</a>
                     </div>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

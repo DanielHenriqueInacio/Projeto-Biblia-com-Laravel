@@ -1,6 +1,6 @@
-@extends("layouts.main")
+@extends("layouts.login")
 
-@section("title", "Versiculos Biblicos - ")
+@section("title", "Login - ")
 
 @section("content")
     <div class="row mb-5">
@@ -21,7 +21,17 @@
                         </svg>
                     </div>
 
-                    <form class="text-center" action="logar.php" method="post">
+                    <form class="text-center" action="{{ route("logar") }}" method="post">
+                        @if ($errors->any())
+                            <div class="alert alert-success">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @csrf
                         <div class="mb-3">
                             <input class="form-control" type="email" name="email" placeholder="Email">
                         </div>
@@ -31,7 +41,7 @@
                         <div class="mb-3">
                             <button class="btn btn-primary d-block w-100" type="submit">Login</button>
                         </div>
-                        <p class="text-muted"><a href="registre.php">Cadastre-se aqui</a></p>
+                        <p class="text-muted"><a href="{{ route("registrar") }}">Cadastre-se aqui</a></p>
                     </form>
                 </div>
             </div>
