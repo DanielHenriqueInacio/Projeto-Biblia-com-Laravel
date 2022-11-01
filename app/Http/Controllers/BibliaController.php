@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Favorito;
 use App\Models\Testament;
 use App\Models\Verse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BibliaController extends Controller
@@ -58,11 +60,14 @@ class BibliaController extends Controller
 
         $totalCapitulos = Verse::where("book", "=", $livro)->max("chapter");
 
+        $versiculosFavoritos = Favorito::where("id_usuario", Auth::id())->pluck("id_versiculo");
+
         return view("biblia.listar-versiculos", [
             "versiculos" => $versiculos,
             "totalCapitulos" => $totalCapitulos,
             "livro" => $livro,
-            "capitulo" => $capitulo
+            "capitulo" => $capitulo,
+            "versiculosFavoritos" => $versiculosFavoritos->toArray()
         ]);
     }
 }

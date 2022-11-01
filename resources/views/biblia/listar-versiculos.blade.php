@@ -12,8 +12,10 @@
         <div class="col-md-9">
             @foreach($versiculos as $versiculo)
                 <p><sup>{{$versiculo->verse}}</sup> {{$versiculo->text}}
-                    <a href="#" class="bt_afavoritar" data-versiculo="" title="Clique para afavoritar esse versículo">
-                        <i class="fa fa-star-o"></i><br>
+                    <a href="#" class="{{ in_array($versiculo->id, $versiculosFavoritos) ? "bt_desafavoritar" : "bt_afavoritar" }}"
+                       title="Clique para {{ in_array($versiculo->id, $versiculosFavoritos) ? "desafavoritar" : "afavoritar" }} esse versículo"
+                    data-versiculo="{{ $versiculo->id }}">
+                        <i class="fa {{ in_array($versiculo->id, $versiculosFavoritos) ? "fa-star" : "fa-star-o" }}"></i><br>
                     </a>
                 </p>
             @endforeach

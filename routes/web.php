@@ -26,6 +26,8 @@ Route::get("/livros/{testamento_id?}", [BibliaController::class, "listarLivros"]
 
 Route::get("/versiculos/{livro}/{capitulo?}", [BibliaController::class, "listarVersiculos"])->name("versiculos_biblia");
 Route::get("/favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos")->middleware("auth");
+Route::post("/favoritos", [FavoritosController::class, "salvarFavoritos"])->name("salvar_favoritos")->middleware("auth");
+Route::delete("/favoritos/{versiculo}", [FavoritosController::class, "excluirFavoritos"])->name("excluir_favoritos")->middleware("auth");
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::post("/logar", [AuthController::class, "logar"])->name("logar");
 Route::get("/novo-usuario", [UsuarioController::class, "registrar"])->name("registrar");
