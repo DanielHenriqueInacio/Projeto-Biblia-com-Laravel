@@ -24,7 +24,7 @@
                     </a>
                 </p>
             @empty
-            <div class="alert alert-info"></div>
+                <div class="alert alert-info"></div>
             @endforelse
         </div>
     </div>

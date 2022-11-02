@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnotacaoController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BibliaController;
 use App\Http\Controllers\DefaultController;
@@ -28,8 +29,14 @@ Route::get("/versiculos/{livro}/{capitulo?}", [BibliaController::class, "listarV
 Route::get("/favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos")->middleware("auth");
 Route::post("/favoritos", [FavoritosController::class, "salvarFavoritos"])->name("salvar_favoritos")->middleware("auth");
 Route::delete("/favoritos/{versiculo}", [FavoritosController::class, "excluirFavoritos"])->name("excluir_favoritos")->middleware("auth");
+
+Route::get("/anotacao", [AnotacaoController::class, "listarAnotacao"])->name("listar_anotacao")->middleware("auth");
+Route::get("/anotacao/{versiculo_id}", [AnotacaoController::class, "anotacao"])->name("modal_anotacao")->middleware("auth");
+Route::post("/anotacao/salvar", [AnotacaoController::class, "salvarAnotacao"])->name("salvar_anotacao")->middleware("auth");
+
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::post("/logar", [AuthController::class, "logar"])->name("logar");
+
 Route::get("/novo-usuario", [UsuarioController::class, "registrar"])->name("registrar");
 Route::post("/cadastrar", [UsuarioController::class, "cadastrar"])->name("cadastrar");
 Route::get("/logout", [AuthController::class, "logout"])->name("sair");

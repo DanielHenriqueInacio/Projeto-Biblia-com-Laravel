@@ -57,4 +57,51 @@ window.onload = function () {
             }
         });
     });
+
+    $(document).on("click", "#bt_salvar_anotacao", function (ev) {
+        ev.preventDefault();
+        let dados = $("#form_anotacoes").serialize();
+        $("#bt_salvar_anotacao").attr("disabled", true).text("Salvando ... ");
+        $.ajax({
+            url: "/anotacao/salvar",
+            dataType: "json",
+            method: "post",
+            data: dados,
+            success: function (response) {
+                console.log(response);
+                if (response.status === "success") {
+                    $("#div_msg")
+                        .removeClass("d-none")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success")
+                        .empty()
+                        .append("<p>Sua anotação foi salva com sucesso!</p>")
+
+                    $("#bt_salvar_anotacao").attr("disabled", false).text("Salvar Anotação");
+
+                    $("#id_anotacao").val(response.id_anotacao)
+                }
+            },
+            error: function(error) {
+                const errors = error.responseJSON.errors;
+
+                $("#div_msg").removeClass("d-none")
+                $(".form-control").removeClass("input-error");
+                let texto = "<ul>";
+                for(let chave of Object.keys(errors)) {
+                    for (let error of errors[chave]) {
+                        texto += `<li> ${error} </li>`;
+                        $(`#${chave}`).addClass("input-error");
+                    }
+                }
+                texto += "</ul>"
+                $("#div_msg").empty().append(texto);
+                $("#bt_salvar_anotacao").attr("disabled", false).text("Salvar Anotação");
+            }
+        });
+
+        // $.post("/anotacao/salvar", dados, function (response) {
+        //     console.log(response);
+        // }, "json")
+    })
 }

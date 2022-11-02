@@ -7,3 +7,8 @@
 .btn-acesso-busca {
     padding: 0 4px;
 }
+
+.input-error {
+    background-color: #f5caca;
+    border: 2px dotted red;
+}

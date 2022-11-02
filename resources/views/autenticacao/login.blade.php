@@ -1,4 +1,4 @@
-@extends("layouts.login")
+@extends("layouts.branco")
 
 @section("title", "Login - ")
 
