@@ -99,9 +99,34 @@ window.onload = function () {
                 $("#bt_salvar_anotacao").attr("disabled", false).text("Salvar Anotação");
             }
         });
+    });
 
-        // $.post("/anotacao/salvar", dados, function (response) {
-        //     console.log(response);
-        // }, "json")
-    })
+    $(document).on("click", ".bt_excluir_anotacao", function (ev) {
+       ev.preventDefault();
+        const $this = $(this);
+        let id_anotacao = $this.data("anotacao"); //data-versiculo
+
+        if (confirm("Deseja realmente excluir essa anotação?")) {
+            $.ajax({
+                url: `/anotacao/${id_anotacao}`,
+                dataType: "json",
+                method: "delete",
+                success: function (response) {
+                    if (response.status === "success") {
+                        $(`.card-anotacao-${id_anotacao}`).fadeOut("slow", function () {
+                            $(this).remove();
+                        })
+                    }
+                }
+            });
+        }
+    });
+
+    Fancybox.bind("[data-fancybox]", {
+        on: {
+            destroy: (fancybox, slide) => {
+                window.location.reload();
+            },
+        },
+    });
 }

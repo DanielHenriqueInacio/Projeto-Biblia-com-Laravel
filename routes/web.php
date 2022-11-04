@@ -26,13 +26,14 @@ Route::get("/livros/{testamento_id?}", [BibliaController::class, "listarLivros"]
 // for opcional, se coloca um ? no final do parametro. Ex. /livros/{testamento?}
 
 Route::get("/versiculos/{livro}/{capitulo?}", [BibliaController::class, "listarVersiculos"])->name("versiculos_biblia");
-Route::get("/favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos")->middleware("auth");
+Route::get("/meus-versiculos-favoritos", [FavoritosController::class, "listarFavoritos"])->name("listar_favoritos")->middleware("auth");
 Route::post("/favoritos", [FavoritosController::class, "salvarFavoritos"])->name("salvar_favoritos")->middleware("auth");
 Route::delete("/favoritos/{versiculo}", [FavoritosController::class, "excluirFavoritos"])->name("excluir_favoritos")->middleware("auth");
 
-Route::get("/anotacao", [AnotacaoController::class, "listarAnotacao"])->name("listar_anotacao")->middleware("auth");
+Route::get("/minhas-anotacoes", [AnotacaoController::class, "listarAnotacao"])->name("listar_anotacao")->middleware("auth");
 Route::get("/anotacao/{versiculo_id}", [AnotacaoController::class, "anotacao"])->name("modal_anotacao")->middleware("auth");
 Route::post("/anotacao/salvar", [AnotacaoController::class, "salvarAnotacao"])->name("salvar_anotacao")->middleware("auth");
+Route::delete("/anotacao/{id}", [AnotacaoController::class, "excluirAnotacao"])->name("excluir_anotacao")->middleware("auth");
 
 Route::get("/login", [AuthController::class, "login"])->name("login");
 Route::post("/logar", [AuthController::class, "logar"])->name("logar");

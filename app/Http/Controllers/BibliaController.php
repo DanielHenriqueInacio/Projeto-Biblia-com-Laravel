@@ -23,7 +23,7 @@ class BibliaController extends Controller
     }
 
 
-    public function listarLivros($testamento_id = false)
+    public function listarLivros($testamento_id)
     {
         $testamentos = [
             "antigo-testamento" => [
@@ -34,7 +34,7 @@ class BibliaController extends Controller
                 "id" => 2,
                 "nome" => "Novo Testamento"
             ],
-            false => [
+            "todos" => [
                 "id" => null,
                 "nome" => "Todos os Livros"
             ]
@@ -42,7 +42,7 @@ class BibliaController extends Controller
 
         $testamento = $testamentos[$testamento_id];
 
-        if ($testamento_id === false) {
+        if ($testamento_id === "todos") {
             $livros = Book::all();
         } else {
             $livros = Book::where("testament", $testamento["id"])->get();

@@ -28,18 +28,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navcol-5">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="{{route("home")}}">Home</a></li>
+                <li class="nav-item"><a class="nav-link {{ Route::current()->getName() == "home" ? "active" : "" }}" href="{{route("home")}}">Home</a></li>
                 {{--                <li class="nav-item"><a class="nav-link active" href="{{ route("rota_teste", ["ZYX"]) }}">Home</a></li>--}}
                 @if(Auth::check())
-                <li class="nav-item"><a class="nav-link" href="{{route("listar_favoritos")}}">Favoritos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Minhas anotações</a></li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::current()->getName() == "listar_favoritos" ? "active" : "" }}" href="{{route("listar_favoritos")}}">Favoritos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::current()->getName() == "listar_anotacao" ? "active" : "" }}" href="{{ route("listar_anotacao") }}">Minhas anotações</a>
+                </li>
                 @endif
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">Testamentos</a>
+                <li class="nav-item dropdown ">
+                    <a class="dropdown-toggle nav-link {{ in_array(Route::current()->getName(), ["livros_biblia", "versiculos_biblia"]) ? "active" : "" }}" aria-expanded="false" data-bs-toggle="dropdown" href="#">Testamentos</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ route("livros_biblia", "antigo-testamento") }}">Antigo Testamentos</a>
-                        <a class="dropdown-item" href="{{ route("livros_biblia", "novo-testamento") }}">Novo Testamentos</a>
-                        <a class="dropdown-item" href="{{ route("livros_biblia") }}">Todos Testamentos</a>
+                        <a class="dropdown-item {{ in_array(Route::current()->getName(), ["livros_biblia", "versiculos_biblia"]) && request()->route('testamento_id') == "antigo-testamento" ? "active" : "" }}"
+                           href="{{ route("livros_biblia", "antigo-testamento") }}">Antigo Testamentos</a>
+                        <a class="dropdown-item {{ in_array(Route::current()->getName(), ["livros_biblia", "versiculos_biblia"]) && request()->route('testamento_id') == "novo-testamento" ? "active" : "" }}" href="{{ route("livros_biblia", "novo-testamento") }}">Novo Testamentos</a>
+                        <a class="dropdown-item {{ in_array(Route::current()->getName(), ["livros_biblia", "versiculos_biblia"]) && request()->route('testamento_id') == "todos" ? "active" : "" }}" href="{{ route("livros_biblia", "todos") }}">Todos Testamentos</a>
                     </div>
                 </li>
                 @unless(Auth::check())

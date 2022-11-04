@@ -5,7 +5,13 @@
 @section("content")
     <div class="row">
         <div class="col-md-12">
-            <h3>Minhas Anotações - <strong class="text-secondary"><small>{{$versiculo->livro->name}} {{$versiculo->chapter}}, {{$versiculo->verse}}</small></strong></h3>
+            <h3>Minhas Anotações -
+                <strong class="text-secondary">
+                    <small>
+                        {{$versiculo->livro->name}} {{$versiculo->chapter}}, {{$versiculo->verse}}
+                    </small>
+                </strong>
+            </h3>
             <p>{{($versiculo->text)}}</p>
         </div>
     </div>

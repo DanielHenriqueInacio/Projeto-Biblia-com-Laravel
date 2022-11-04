@@ -12,7 +12,17 @@ class AnotacaoController extends Controller
 {
     public function listarAnotacao()
     {
-        return view("anotacoes.listar-anotacao");
+        $usuario = Auth::id();
+        $anotacao = Anotacao::select(
+                    "verses.text", "books.name As livro", "verses.book",
+                    "verses.chapter", "verses.verse", "verses.id as id_versiculo",
+                    "anotacoes.titulo", "anotacoes.anotacao", "anotacoes.id")
+            ->join("verses", "anotacoes.id_versiculo", "=", "verses.id")
+            ->join("books", "verses.book", "=", "books.id")
+            ->where("anotacoes.id_usuario", $usuario)
+            ->get();
+
+        return view("anotacoes.listar-anotacao", ["anotacoes" => $anotacao]);
     }
 
     public function anotacao($versiculo_id)
@@ -45,8 +55,10 @@ class AnotacaoController extends Controller
         return ["status" => "success", "id_anotacao" => $anotacao->id];
     }
 
-    public function excluirAnotacao()
+    public function excluirAnotacao($id_anotacao)
     {
-        return view("anotacoes.editar-anotacao");
+        $anotacao = Anotacao::find($id_anotacao);
+        $anotacao->delete();
+        return ["status" => "success"];
     }
 }
